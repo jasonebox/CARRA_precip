@@ -1,0 +1,2 @@
+RCM,comp_var,slope,intercept,R,RCM - in-situ,bias adj. RMSD,mean obs,RMSD/mean obs,std. obs,N,min_elev,max_elev
+NHM-SMAP,P-E-BSS,-0.19,320,0.119,-144,359,564,0.64,318,105,271,2850

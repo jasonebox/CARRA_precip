@@ -23,7 +23,7 @@ import os
 
 #-------------------------------------- change path
 AD=0 #Armin
-path='/Users/jason/Dropbox/CARRA/CARRA_rain/'
+path='/Users/jason/Dropbox/CARRA/CARRA_precip/'
 
 if AD:
     path='C:/Users/Armin/Documents/Work/GEUS/Github/CARRA_rain/'
@@ -37,8 +37,10 @@ RCM_names=['MARv3.11.5_6km']
 # 'MARv3.12.0.4BS_15km',
 RCM_names=['CARRA','MARv3.12.0.4BS_15km','NHM-SMAP','RACMO2.3p2_5.5km'] 
 RCM_names=['CARRA','RACMO2.3p2_5.5km','NHM-SMAP','MARv3.13.0wBSS_15km','MARv3.13.0noBSS_15km']
+# RCM_names=['CARRA','RACMO2.3p2_5.5km','NHM-SMAP','MARv3.13.0wBSS_15km']
 
 comp_var='P-E-BSS'
+# comp_var='P'
 
 t_thresh=0
 
@@ -189,11 +191,11 @@ for basin_index,basin_region in enumerate(basin_regions):
         # fig.supylabel('modeled minus in-situ snow accumulation, mm w.e.')
         # fig.supxlabel('elevation, m')
 
-#%%
+##%%
     df_all.columns
     nams=['region','RCM', 'slope', 'intercept','RCM - in-situ', 'bias adj. RMSD', 'mean obs',
            'RMSD/mean obs', 'N',  'min_elev', 'max_elev']
-    df_all.to_csv('/Users/jason/Dropbox/CARRA/CARRA_rain/stats/summary_vs_elev.csv',columns=nams,index=None)
+    df_all.to_csv('./stats/'+comp_var+'_summary_vs_elev.csv',columns=nams,index=None)
     # plt.legend()
     # plt.ioff()
 

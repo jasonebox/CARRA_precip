@@ -1,0 +1,2 @@
+RCM,comp_var,slope,intercept,R,RCM - in-situ,bias adj. RMSD,mean obs,RMSD/mean obs,std. obs,N,min_elev,max_elev
+RACMO2.3p2_5.5km,P,-0.30,523,-0.626,-72,351,564,0.62,318,105,271,2850

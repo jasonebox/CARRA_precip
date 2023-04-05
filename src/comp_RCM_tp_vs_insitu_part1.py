@@ -34,7 +34,7 @@ import time
 
 #-------------------------------------- change path
 AD=0 #Armin
-path='/Users/jason/Dropbox/CARRA/CARRA_rain/'
+path='/Users/jason/Dropbox/CARRA/CARRA_precip/'
 path_point_data_RCMs_in_situ='/Users/jason/0_dat/RCMs_precip_eval/'
 
 if AD:
@@ -135,17 +135,18 @@ for t_thresh in t_threshs:
     RCM_names=['CARRA','RACMO2.3p2_5.5km','NHM-SMAP','MARv3.11.5_6km','MARv3.13.0wBSS_15km','MARv3.13.0noBSS_15km']
     RCM_names=['CARRA','RACMO2.3p2_5.5km','NHM-SMAP','MARv3.13.0wBSS_15km','MARv3.13.0noBSS_15km']
     RCM_names=['CARRA','RACMO2.3p2_5.5km','NHM-SMAP','MARv3.13.0wBSS_15km','MARv3.13.0noBSS_15km']
-    RCM_names=['CARRA','RACMO2.3p2_5.5km','NHM-SMAP','MARv3.13.0wBSS_15km']
+    # RCM_names=['CARRA','RACMO2.3p2_5.5km','NHM-SMAP','MARv3.13.0wBSS_15km']
     # RCM_names=['CARRA','RACMO2.3p2_5.5km','NHM-SMAP','MARv3.11.5_6km','MARv3.13.0wBSS_15km','MARv3.13.0noBSS_15km']
     # RCM_names=['MARv3.12.0.4BS_15km']    
     # RCM_names=['MARv3.11.5_6km'] # no BSS    
-    # RCM_names=['MARv3.13.0wBSS_15km'] # BSS    
+    RCM_names=['MARv3.13.0wBSS_15km','MARv3.13.0noBSS_15km']
     # RCM_names=['MARv3.13.0noBSS_15km'] # BSS
     # RCM_names=['CARRA']
     # RCM_names=['RACMO2.3p2_5.5km']
     # RCM_names=['NHM-SMAP']
     comp_var='P-E-BSS'
     # comp_var='P-E'
+    comp_var='P'
 
     # out_fn_all=RCM_names[0]+'_'+comp_var+'comp_vs_elev'+str(comp_by_elevation)+suffixx
     # out_fn_all=RCM_names[0]+'_'+comp_var+'comp_vs_elev'+str(comp_by_elevation)
@@ -154,8 +155,9 @@ for t_thresh in t_threshs:
     for jj,RCM_name in enumerate(RCM_names):
         n_compvars=3
         if jj>2:n_compvars=2
+        for kk in range(0,1): # 'P'
         # for kk in range(1,2): # 'P-E'
-        for kk in range(2,3): # 'P-E-BSS'
+        # for kk in range(2,3): # 'P-E-BSS'
             # comp_vars=['P-BSS']
             # comp_vars=['P-E','P']
             if kk==0:comp_var='P'
@@ -184,12 +186,13 @@ for t_thresh in t_threshs:
                 
                 if RCM_name[0:3]=='MAR':
                     if RCM_name[0:8]=='MARv3.13':
-                        fn=path_point_data_RCMs_in_situ+'_common_format/'+RCM_name+'_SMB_at_points_'+year+'.csv'
-                    else:
-                        fn=path_point_data_RCMs_in_situ+'_common_format/'+RCM_name+'_tp_at_points_'+year+'.csv'
-                    dd=pd.read_csv(fn)
-                    df_tp = pd.concat([df_tp,dd])
-                    
+                    #     fn=path_point_data_RCMs_in_situ+'_common_format/'+RCM_name+'_SMB_at_points_'+year+'.csv'
+                    # else:
+                        fn=path_point_data_RCMs_in_situ+'_common_format/'+RCM_name+'_SF_at_points_'+year+'.csv'
+                        dd=pd.read_csv(fn)
+                        df_tp = pd.concat([df_tp,dd])
+                # print(RCM_name[0:8])
+                #     #%%
                 if RCM_name[0:3]=='NHM':
                     fn=path_point_data_RCMs_in_situ+'_common_format/'+'NHM-SMAP'+'_swgf_at_points_'+year+'.csv'
                     dd=pd.read_csv(fn)
@@ -239,10 +242,15 @@ for t_thresh in t_threshs:
                 if RCM_name[0:3]=='RAC':
                     df_RCM=df_tp.iloc[:,2:]+df_subl.iloc[:,2:]-df_sndiv.iloc[:,2:]
           
-            # if comp_var=='P':
-            #     df_RCM=df_tp
-            #     df_RCM['time']= pd.to_datetime(df_tp.iloc[:,0], format='%Y-%m-%d')
-            #     df_RCM = df_RCM.set_index(['time'])
+            if comp_var=='P':
+                if RCM_name[0:3]=='CAR':
+                    df_RCM=df_tp.iloc[:,1:]
+                if RCM_name[0:3]=='NHM':
+                    df_RCM=df_tp.iloc[:,2:]
+                if RCM_name[0:3]=='MAR':
+                    df_RCM=df_tp.iloc[:,1:]
+                if RCM_name[0:3]=='RAC':
+                    df_RCM=df_tp.iloc[:,2:]
     
             # if comp_var=='P-E':
             #     df_RCM=PmE
@@ -397,8 +405,8 @@ for t_thresh in t_threshs:
             if regional_scatter: 
                 basin_regions=['SE','NW','CE','CW', 'SW', 'NO', 'NE']
                 basin_ranges=[2000, 600, 800, 550, 1600, 400, 140]
-                basin_regions=['SE']
-                basin_ranges=[1600]
+                # basin_regions=['SE']
+                # basin_ranges=[1600]
             else:
                 basin_regions=['all_basins']
                 basin_ranges=[1200]
